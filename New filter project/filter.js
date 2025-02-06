@@ -70,3 +70,50 @@ const data = [
     }
 
     displayProducts(data);
+
+    searchinput.addEventListener("keyup", (e)=>{
+        const value = e.target.value.toLowerCase();
+
+        if(value){
+
+            displayProducts(data.filter(iteam => iteam.name.toLocaleLowerCase().indexOf(value) !== -1))
+        }else{
+            displayProducts(data)
+        }
+    })
+
+
+
+
+
+    const setCategories = () =>{
+
+        const allCats = data.map(item => item.cat)
+        const categories =[
+            "All",
+            ...allCats.filter((item, i)=>{
+                return allCats.indexOf(item) === i
+            })
+        ]
+
+        categoriesContainer.innerHTML = categories.map(cat =>
+            `
+            <span class = 'cat'${cat}</span>
+            `
+
+ ).join('')
+
+
+ categoriesContainer.addEventListener("click", (e)=>{
+    const selectedCat = e.target.textContent;
+
+    if(selectedCat ==='All'){
+        displayProducts(data)
+    }else{
+
+        displayProducts(data.filter(item =>
+            item.cat === selectedCat
+        ))
+    } 
+})
+    }
